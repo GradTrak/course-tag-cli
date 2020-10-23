@@ -19,16 +19,26 @@ module.exports.program = program = new Command();
 
 program.name('gradtrak');
 
-program.command('tag <tag-id> <course-ids...>').action(async(tagId, courseIds) => {
-  await connect();
-  let courses = await Course.find({}, { __v: 0 })
-  console.log(courses)
-  courses = courses.filter(course => {
-    return courseIds.includes(course.id);
+program.command('tag <tag-id> <course-ids...>')
+  .action(async(tagId, courseIds) => {
+    await connect();
+    let courses = await Course.find({}, { __v: 0 })
+    console.log(courses)
+    courses = courses.filter(course => {
+      return courseIds.includes(course.id);
+    })
+    courses.forEach(course => {
+      course.tagIds.push(tagId);
+      course.save();
+      console.log(`tagged ${course.id} with ${tagId}`)
+    })
   })
-  courses.forEach(course => {
-    course.tagIds.push(tagId);
-    course.save();
-    console.log(`tagged ${course.id} with ${tagId}`)
-  })
-})
+  .description(`A commond list of tags are as follows:
+ac: american cultures
+ls_arts: letters and sciences breadths.
+ls_hist
+ls_inter
+ls_philo
+ls_socio
+ls_quant
+ls_lang`)

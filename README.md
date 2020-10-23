@@ -12,3 +12,4 @@ Then,
 `gradtrak tag <tag-id> courseid1 courseid2 courseid3`. 
 You can insert any number of courseids per tagid.
 
+Try `gradtrak tag -h` for a list of common tags that may be useful. 
