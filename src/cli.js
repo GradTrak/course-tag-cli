@@ -21,7 +21,8 @@ program.name('gradtrak');
 
 program.command('tag <tag-id> <course-ids...>').action(async(tagId, courseIds) => {
   await connect();
-  let courses = await Course.find({}, { _id: 0, __v: 0 })
+  let courses = await Course.find({}, { __v: 0 })
+  console.log(courses)
   courses = courses.filter(course => {
     return courseIds.includes(course.id);
   })
